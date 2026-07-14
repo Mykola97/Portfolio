@@ -7,7 +7,7 @@ export function Caret() {
             w-[0.6em]
             h-[1.1em]
             ml-px
-            bg-green-400
+            bg-white
             animate-blink
             align-text-bottom
             animate-blink

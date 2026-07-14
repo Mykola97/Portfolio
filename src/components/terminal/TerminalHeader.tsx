@@ -7,7 +7,7 @@ export default function TerminalHeader() {
         <div className="h-3 w-3 rounded-full bg-yellow-500" />
         <div className="h-3 w-3 rounded-full bg-green-500" />
 
-        <span className="ml-4 text-sm text-zinc-400">
+        <span className="ml-4 text-sm text-zinc-400 overflow-hidden">
           mykola@portfolio:~
         </span>
       </div>

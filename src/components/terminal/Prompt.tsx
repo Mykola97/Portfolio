@@ -1,5 +1,5 @@
 "use client";
-import { KeyboardEvent, useRef } from "react";
+import { KeyboardEvent, useRef, useState } from "react";
 import { Caret } from "./Caret";
 
 type PromptProps = {
@@ -16,11 +16,28 @@ export default function Prompt({
   onSubmit
 }: PromptProps) {
 
+  const [history, setHistory] = useState<string[]>([]);
+
+  function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setHistory((prevHistory) => [...prevHistory, value]);
+      onSubmit();
+    }
+  }
 
   return (
     <div className="flex items-center font-mono">
 
-      <div>nick@portfolio:~$ {value}
+      <div className="w-full font-mono whitespace-pre-wrap break-all">
+        <span className="text-green-400">mykola</span>
+        <span className="text-white">@</span>
+        <span className="text-blue-400">portfolio</span>
+        <span className="text-white">:</span>
+        <span className="text-cyan-400">~</span>
+        <span className="text-white">$ </span>
+
+        <span className="text-white">{value}</span>
         <Caret />
       </div>
 
@@ -30,6 +47,7 @@ export default function Prompt({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         autoFocus={true}
+        onKeyDown={handleKeyDown}
         className="absolute opacity-0"
       />
     </div>
