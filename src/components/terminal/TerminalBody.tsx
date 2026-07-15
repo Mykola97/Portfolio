@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Prompt from "./Prompt";
 import { executeCommand } from "@/commands/commandExcecutor";
+import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
 
 type TerminalBodyProps = {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -11,6 +12,7 @@ export default function TerminalBody({ inputRef }: TerminalBodyProps) {
   const [command, setCommand] = useState("");
   const [outputHistory, setOutputHistory] = useState<string[]>([]);
 
+  const terminalReceiver = new TerminalReceiver(setOutputHistory);
   function handlePromptSubmit() {
     let output: string;
 
