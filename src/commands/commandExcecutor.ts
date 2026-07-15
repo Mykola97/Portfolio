@@ -1,13 +1,16 @@
+import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
 import { commands } from "./registry";
 
-export function executeCommand(input: string) {
+export function executeCommand(input: string, terminalReceiver: TerminalReceiver): CommandResult {
   const command = commands.find(
     (command) => command.name === input
   );
 
   if (!command) {
-    return `Command not found: ${input}`;
+    return {
+      output: `Command not found: ${input}`
+    };
   }
 
-  return command.execute();
+  return command.execute(terminalReceiver);
 }

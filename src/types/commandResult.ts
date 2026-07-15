@@ -1,0 +1,3 @@
+type CommandResult = {
+    output?: string;
+}

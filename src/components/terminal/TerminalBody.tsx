@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Prompt from "./Prompt";
 import { executeCommand } from "@/commands/commandExcecutor";
 import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
@@ -12,16 +12,24 @@ export default function TerminalBody({ inputRef }: TerminalBodyProps) {
   const [command, setCommand] = useState("");
   const [outputHistory, setOutputHistory] = useState<string[]>([]);
 
-  const terminalReceiver = new TerminalReceiver(setOutputHistory);
+  const terminalReceiver = useMemo(
+  () => new TerminalReceiver(setOutputHistory),
+  [setOutputHistory]
+);
+
   function handlePromptSubmit() {
-    let output: string;
 
     if (command.trim() === "") return;
-    output = executeCommand(command);
+    const commandResult = executeCommand(command, terminalReceiver);
+    const output = commandResult.output;
 
-    setOutputHistory((prevHistory) => [...prevHistory, output]);
+    if (output !== undefined) {
+      setOutputHistory((prevHistory) => [...prevHistory, output]);
+    }
+
     setCommand("");
   }
+
   return (
     <div className="min-h-[600px] p-6 font-mono text-green-400 whitespace-pre-wrap break-words">
       <p>Welcome to my portfolio.</p>
