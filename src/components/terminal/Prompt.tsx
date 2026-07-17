@@ -48,7 +48,7 @@ export default function Prompt({
         onChange={(e) => onChange(e.target.value)}
         autoFocus={true}
         onKeyDown={handleKeyDown}
-        className="absolute opacity-0"
+        className="fixed top-0 left-0 w-px h-px opacity-0"
       />
     </div>
   );

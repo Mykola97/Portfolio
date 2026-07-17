@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Prompt from "./Prompt";
 import { executeCommand } from "@/commands/commandExcecutor";
 import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
@@ -11,17 +11,23 @@ type TerminalBodyProps = {
 export default function TerminalBody({ inputRef }: TerminalBodyProps) {
   const [command, setCommand] = useState("");
   const [outputHistory, setOutputHistory] = useState<string[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const terminalReceiver = useMemo(
-  () => new TerminalReceiver(setOutputHistory),
-  [setOutputHistory]
-);
+    () => new TerminalReceiver(setOutputHistory),
+    [setOutputHistory]
+  );
+
+  useLayoutEffect(() => {
+     if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+     }
+  }, [outputHistory]);
 
   function handlePromptSubmit() {
 
     if (command.trim() === "") return;
-    const commandResult = executeCommand(command, terminalReceiver);
-    const output = commandResult.output;
+    const {output} = executeCommand(command, terminalReceiver);
 
     if (output !== undefined) {
       setOutputHistory((prevHistory) => [...prevHistory, output]);
@@ -31,7 +37,9 @@ export default function TerminalBody({ inputRef }: TerminalBodyProps) {
   }
 
   return (
-    <div className="min-h-[600px] p-6 font-mono text-green-400 whitespace-pre-wrap break-words">
+    <div
+    ref={scrollRef}
+    className="h-150 p-6 font-mono text-green-400 whitespace-pre-wrap wrap-break-word overflow-y-auto">
       <p>Welcome to my portfolio.</p>
       <p>Type "help" to see available commands.</p>
 
