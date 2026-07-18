@@ -4,7 +4,7 @@ import { Caret } from "./Caret";
 
 type PromptProps = {
   value: string;
-inputRef: React.RefObject<HTMLTextAreaElement | null>;
+  inputRef: React.RefObject<HTMLTextAreaElement | null>;
   onChange: (value: string) => void;
   onSubmit: () => void;
 };
@@ -17,12 +17,39 @@ export default function Prompt({
 }: PromptProps) {
 
   const [history, setHistory] = useState<string[]>([]);
+  const historyIndexRef = useRef<number>(-1);
 
   function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      setHistory((prevHistory) => [...prevHistory, value]);
-      onSubmit();
+    switch (e.key) {
+      case "Enter":
+        e.preventDefault();
+        if (value.trim() === "") return;
+        setHistory((prevHistory) => {
+          historyIndexRef.current = prevHistory.length + 1;
+          return [...prevHistory, value]
+        });
+        onSubmit();
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        if (history.length > 0 && historyIndexRef.current > 0) {
+          historyIndexRef.current = historyIndexRef.current - 1;
+          const previousCommand = history[historyIndexRef.current];
+          onChange(previousCommand);
+        }
+        break;
+      case "ArrowDown":
+        e.preventDefault();
+        if (historyIndexRef.current < history.length) {
+          historyIndexRef.current = historyIndexRef.current + 1;
+          const nextCommand = history[historyIndexRef.current];
+          onChange(nextCommand);
+        } else if (historyIndexRef.current === history.length) {
+          onChange("");
+        }
+        break;
+      default:
+        break;
     }
   }
 

@@ -26,7 +26,7 @@ export default function TerminalBody({ inputRef }: TerminalBodyProps) {
 
   function handlePromptSubmit() {
 
-    if (command.trim() === "") return;
+    if (command?.trim() === "") return;
     const {output} = executeCommand(command, terminalReceiver);
 
     if (output !== undefined) {
