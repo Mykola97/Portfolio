@@ -1,6 +1,6 @@
 import { TerminalReceiverInterface } from './TerminalReceiverInterface';
 
-type SetHistory = React.Dispatch<React.SetStateAction<string[]>>;
+type SetHistory = React.Dispatch<React.SetStateAction<CommandResult[]>>;
 export class TerminalReceiver implements TerminalReceiverInterface {
     constructor(private setOutputHistory: SetHistory) {}
 

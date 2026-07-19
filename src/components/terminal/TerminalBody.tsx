@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Prompt from "./Prompt";
 import { executeCommand } from "@/commands/commandExcecutor";
 import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
+import TerminalOutputRenderer from "./TerminalOutputRenderer";
 
 type TerminalBodyProps = {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -10,7 +11,7 @@ type TerminalBodyProps = {
 
 export default function TerminalBody({ inputRef }: TerminalBodyProps) {
   const [command, setCommand] = useState("");
-  const [outputHistory, setOutputHistory] = useState<string[]>([]);
+  const [outputHistory, setOutputHistory] = useState<CommandResult[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const terminalReceiver = useMemo(
@@ -27,10 +28,10 @@ export default function TerminalBody({ inputRef }: TerminalBodyProps) {
   function handlePromptSubmit() {
 
     if (command?.trim() === "") return;
-    const {output} = executeCommand(command, terminalReceiver);
+    const commandResult = executeCommand(command, terminalReceiver);
 
-    if (output !== undefined) {
-      setOutputHistory((prevHistory) => [...prevHistory, output]);
+    if (commandResult.data !== undefined) {
+      setOutputHistory((prevHistory) => [...prevHistory, commandResult]);
     }
 
     setCommand("");
@@ -44,9 +45,7 @@ export default function TerminalBody({ inputRef }: TerminalBodyProps) {
       <p>Type "help" to see available commands.</p>
 
       {outputHistory.map((output, index) => (
-        <div key={index} className="text-green-400">
-          {output}
-        </div>
+        <TerminalOutputRenderer output={output} key={index}  />
       ))}
 
       <Prompt

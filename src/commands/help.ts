@@ -1,5 +1,5 @@
-import { Command } from "@/types/сommand";
-import { commands } from "./registry";
+import { Command } from "@/types/command";
+import { commands } from "@/commands/registry";
 
 export const helpCommand: Command = {
   name: "help",
@@ -7,7 +7,8 @@ export const helpCommand: Command = {
 
   execute(): CommandResult {
     return {
-      output: commands
+      type: "text",
+      data: commands
         .map(
           (command) =>
             `${command.name.padEnd(10)} - ${command.description}`

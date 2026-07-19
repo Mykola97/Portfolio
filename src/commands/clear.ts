@@ -1,5 +1,5 @@
 import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
-import { Command } from "@/types/сommand";
+import { Command } from "@/types/command";
 
 export const clearCommand: Command = {
     name: "clear",
@@ -11,7 +11,7 @@ export const clearCommand: Command = {
         }
         
         return {
-            output: undefined
+            type: "clear"
         };
     }
 };
