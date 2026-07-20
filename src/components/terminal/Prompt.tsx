@@ -4,14 +4,14 @@ import { Caret } from "./Caret";
 import { useCommandHistory } from "../hooks/useCommandHistory";
 
 type PromptProps = {
-  value: string;
+  command: string;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
-  onChange: (value: string) => void;
+  onChange: (command: string) => void;
   onSubmit: () => void;
 };
 
 export default function Prompt({
-  value,
+  command,
   inputRef,
   onChange,
   onSubmit
@@ -27,8 +27,8 @@ export default function Prompt({
     switch (e.key) {
       case "Enter":
         e.preventDefault();
-        if (value.trim() === "") return;
-        addCommand(value);
+        if (command.trim() === "") return;
+        addCommand(command);
         onSubmit();
         break;
       case "ArrowUp":
@@ -58,14 +58,14 @@ export default function Prompt({
         <span className="text-cyan-400">~</span>
         <span className="text-white">$ </span>
 
-        <span className="text-white">{value}</span>
+        <span className="text-white">{command}</span>
         <Caret />
       </div>
 
 
       <textarea
         ref={inputRef}
-        value={value}
+        value={command}
         onChange={(e) => onChange(e.target.value)}
         autoFocus={true}
         onKeyDown={handleKeyDown}

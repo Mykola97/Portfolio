@@ -1,5 +1,5 @@
 import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
-import { commands } from "./registry";
+import { commands } from "@/commands/registry";
 
 export function executeCommand(input: string, terminalReceiver: TerminalReceiver): CommandResult {
   const command = commands.find(
@@ -7,9 +7,8 @@ export function executeCommand(input: string, terminalReceiver: TerminalReceiver
   );
 
   if (!command) {
-    return {
-      output: `Command not found: ${input}`
-    };
+    terminalReceiver.write(<div>Command not found: {input}</div>);
+    return;
   }
 
   return command.execute(terminalReceiver);
