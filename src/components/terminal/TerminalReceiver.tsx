@@ -35,7 +35,7 @@ export class TerminalReceiver implements TerminalReceiverInterface {
   }
 
   openUrl(url: string): void {
-    //pass
+    window.open(url, "_blank");
   }
 
   downloadFile(url: string): void {

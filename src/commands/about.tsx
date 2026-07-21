@@ -16,7 +16,7 @@ export const aboutCommand: Command = {
             alt="Profile Picture"
             width={100}
             height={100}
-            className="shrink-0"
+            className="shrink-0 !h-[120px] !w-[120px]"
           />
 
           <p>

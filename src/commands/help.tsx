@@ -12,6 +12,7 @@ export const helpCommand: Command = {
         (command) => {
           return (
             <div key={crypto.randomUUID()}>
+              <br />
               <button
                 className="cursor-pointer"
                 onClick={() => terminalReceiver.inputCommand(command.name)}

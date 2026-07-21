@@ -37,7 +37,7 @@ export default function TerminalBody({ inputRef }: TerminalBodyProps) {
   return (
     <div
     ref={scrollRef}
-    className="h-150 p-6 font-mono text-green-400 whitespace-pre-wrap wrap-break-word overflow-y-auto">
+    className="h-150 p-6 font-mono text-green-400 whitespace-pre-wrap wrap-break-word overflow-y-auto terminal-scroll">
       <p>Welcome to my portfolio.</p>
       <p>Type "<button
                 className="
