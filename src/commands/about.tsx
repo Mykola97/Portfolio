@@ -5,49 +5,45 @@ import Image from "next/image";
 export const aboutCommand: Command = {
   name: "about",
   description: "Show information about me",
+  descriptionKey: "commands.about.description",
 
   execute(terminalReceiver: TerminalReceiver): void {
+    const t = terminalReceiver.translate;
     const output: React.ReactElement = (
       <div className="flex flex-col gap-4">
         <br />
         <div className="flex items-start gap-4">
           <Image
             src="/images/profile.png"
-            alt="Profile Picture"
+            alt={t("Profile Picture", "commands.about.imgAlt")}
             width={100}
             height={100}
             className="shrink-0 !h-[120px] !w-[120px]"
           />
 
           <p>
-            Hello! I'm Mykola, Full-Stack Software Developer with 7 years of
-            experience in the fintech industry, specializing in payment systems.
-            Expertise in JavaScript, Node.js, Python and Java, with strong
-            experience in front-end and back-end development, API integration,
-            and optimization of transaction processing systems and banking APIs.
+            {t("If you see it, ask me to fix :)","commands.about.summary")}
           </p>
         </div>
 
         <p>
-          I enjoy designing scalable backend systems, building intuitive frontends
-          and improving developer experience.
+          {t("If you see it, ask me to fix :)", "commands.about.firstBlock")}
         </p>
 
         <div>
-          <p className="mb-2">Currently interested in:</p>
+          <p className="mb-2">{t("Currently interested in:", "commands.about.secondBlock")}</p>
 
           <ul className="list-disc pl-6">
-            <li>React & Next.js for frontend development</li>
-            <li>Node.js, Java, Python for backend development</li>
-            <li>Distributed systems</li>
-            <li>System design</li>
-            <li>Developer tooling</li>
+            <li>{t("React & Next.js for frontend development", "commands.about.skills.frontend")}</li>
+            <li>{t("Node.js, Java, Python for backend development", "commands.about.skills.backend")}</li>
+            <li>{t("Distributed systems", "commands.about.skills.distributedSystems")}</li>
+            <li>{t("System design", "commands.about.skills.systemDesign")}</li>
+            <li>{t("Developer tooling", "commands.about.skills.tooling")}</li>
           </ul>
         </div>
 
         <p>
-          Outside of work I enjoy learning French, reading about software
-          architecture, building side projects and play chess.
+          {t("If you see it, ask me to fix :)", "commands.about.hobby")}
         </p>
 
       </div>

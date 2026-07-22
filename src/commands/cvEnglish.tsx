@@ -4,6 +4,8 @@ import { Command } from "@/types/command";
 export const cvCommand: Command = {
   name: "cvEnglish",
   description: "Open my CV in English",
-    execute(terminalReceiver: TerminalReceiver): void {
-    }
+  descriptionKey: "commands.cvEnglish.descripotion",
+  
+  execute(terminalReceiver: TerminalReceiver): void {
+  }
 }

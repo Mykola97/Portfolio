@@ -1,11 +1,13 @@
 import { executeCommand } from '@/commands/commandExcecutor';
 import { TerminalReceiverInterface } from './TerminalReceiverInterface';
+import en from '@/locales/en';
 
 type SetHistory = React.Dispatch<React.SetStateAction<React.ReactNode[]>>;
 type SetCommand = React.Dispatch<React.SetStateAction<string>>;
 export class TerminalReceiver implements TerminalReceiverInterface {
   constructor(private setOutputHistory: SetHistory,
-    private setCommand: SetCommand
+    private setCommand: SetCommand,
+    public translate: (fallback: string, key?: string) => string
   ) { }
 
   clearOutput(): void {
@@ -38,7 +40,12 @@ export class TerminalReceiver implements TerminalReceiverInterface {
     window.open(url, "_blank");
   }
 
-  downloadFile(url: string): void {
-    //pass
+  downloadFile(path: string, url: string): void {
+    const link = document.createElement("a");
+    link.href = path;
+    link.download = url ?? "";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 }

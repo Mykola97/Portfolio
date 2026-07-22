@@ -4,7 +4,9 @@ import { Command } from "@/types/command";
 export const cvFranchCommand: Command = {
   name: "cvFrance",
   description: "Open my CV in French",
-    execute(terminalReceiver: TerminalReceiver): void {
-      terminalReceiver.openUrl("/documents/KolomberFR.pdf");
-    }
+  descriptionKey: "commands.cvFrance.description",
+
+  execute(terminalReceiver: TerminalReceiver): void {
+    terminalReceiver.openUrl("/documents/KolombetFR.pdf");
+  }
 }

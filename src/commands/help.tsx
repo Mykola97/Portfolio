@@ -5,6 +5,7 @@ import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
 export const helpCommand: Command = {
   name: "help",
   description: "Show available commands",
+  descriptionKey: "commands.help.description",
 
   execute(terminalReceiver: TerminalReceiver): void {
     let output = commands
@@ -12,7 +13,6 @@ export const helpCommand: Command = {
         (command) => {
           return (
             <div key={crypto.randomUUID()}>
-              <br />
               <button
                 className="cursor-pointer"
                 onClick={() => terminalReceiver.inputCommand(command.name)}
@@ -30,7 +30,7 @@ export const helpCommand: Command = {
                   {command.name}
                 </span>
               </button>
-              - {command.description}
+              - {terminalReceiver.translate(command.description, command.descriptionKey)}
             </div>
           )
         });

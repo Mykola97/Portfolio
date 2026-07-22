@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Prompt from "./Prompt";
 import { executeCommand } from "@/commands/commandExcecutor";
 import { TerminalReceiver } from "@/components/terminal/TerminalReceiver";
 import React from "react";
+import { I18nContext } from "@/locales/I18nContext";
 
 type TerminalBodyProps = {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -13,10 +14,16 @@ export default function TerminalBody({ inputRef }: TerminalBodyProps) {
   const [command, setCommand] = useState("");
   const [outputHistory, setOutputHistory] = useState<React.ReactNode[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const context = useContext(I18nContext);
+  
+  if (!context) {
+    throw new Error("Context not provided");
+  }
+  const { t } = context;
 
   const terminalReceiver = useMemo(
-    () => new TerminalReceiver(setOutputHistory, setCommand),
-    [setOutputHistory, setCommand]
+    () => new TerminalReceiver(setOutputHistory, setCommand, t),
+    [setOutputHistory, setCommand, t]
   );
 
   useLayoutEffect(() => {

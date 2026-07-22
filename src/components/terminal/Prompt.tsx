@@ -1,7 +1,7 @@
 "use client";
 import { KeyboardEvent, useRef, useState } from "react";
 import { Caret } from "./Caret";
-import { useCommandHistory } from "../hooks/useCommandHistory";
+import { useCommandHistory } from "./hooks/useCommandHistory";
 
 type PromptProps = {
   command: string;
