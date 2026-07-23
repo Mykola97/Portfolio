@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-export type Language = "en" | "fr";
+import { Language } from "@/locales/index";
 
 export interface I18nContextValue {
   language: Language;
